@@ -1,11 +1,31 @@
+/*
+ * @(#)FuzzyCMeans.c
+ *
+ * Copyright (c) 2013 gyaikhom
+ *
+ */
+/*--------------------------------------------------------------
+--  #1.
+--  Date: Aug, 08, 2019
+--  Author: gyaikhom
+--  Motivo: Contribute to students
+-------------------------------------------------------------
+--  #2.
+--  Date: Jun, 01, 2021
+--  Author: José Mateus e José Lucas
+--  Motivo: Trabalho da disciplina de Sistemas Embarcados 2021.1, Professor: Elias Teodoro
+-------------------------------------------------------------
+**/
+
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_DATA_POINTS 5000
-#define MAX_CLUSTER 100
-#define MAX_DATA_DIMENSION 20
+#define MAX_DATA_POINTS 178
+#define MAX_CLUSTER 3
+#define MAX_DATA_DIMENSION 13
 
 int num_data_points;
 int num_clusters;
@@ -49,11 +69,12 @@ int init(char *fname) {
         printf("Termination criterion should be > 0.0 and <= 1.0\n");
         goto failure;
     }
+
     for (i = 0; i < num_data_points; i++) {
-        printf("\n%i - ", i);
+        // printf("\n%i - ", i);
         for (j = 0; j < num_dimensions; j++) {
             fscanf(f, "%lf", &data_point[i][j]);
-            printf("%f ", data_point[i][j]);
+            // printf("%f ", data_point[i][j]);
             if (data_point[i][j] < low_high[j][0])
                 low_high[j][0] = data_point[i][j];
             if (data_point[i][j] > low_high[j][1])
@@ -83,6 +104,7 @@ int calculate_centre_vectors() {
     int i, j, k;
     double numerator, denominator;
     double t[MAX_DATA_POINTS][MAX_CLUSTER];
+
     for (i = 0; i < num_data_points; i++) {
         for (j = 0; j < num_clusters; j++) {
             t[i][j] = pow(degree_of_memb[i][j], fuzziness);
@@ -173,6 +195,7 @@ void print_data_points(char *fname) {
 
 void print_membership_matrix(char *fname) {
     int i, j;
+    int clusters[3] = {0};
     FILE *f;
     if (fname == NULL)
         f = stdout;
@@ -181,13 +204,24 @@ void print_membership_matrix(char *fname) {
         exit(1);
     }
     fprintf(f, "Membership matrix:\n");
+    fprintf(f, "Elements\tCluster 01\tCluster 02\tCluster 03\n");
     for (i = 0; i < num_data_points; i++) {
+        float bigger = 0;
+        char index = 0;
         fprintf(f, "Data[%d]: ", i);
         for (j = 0; j < num_clusters; j++) {
             fprintf(f, "%lf ", degree_of_memb[i][j]);
+            if (bigger < degree_of_memb[i][j]) {
+                bigger = degree_of_memb[i][j];
+                index = j;
+            }
         }
+        clusters[index]++;
         fprintf(f, "\n");
     }
+    printf("------------------------------------------------------------------------\n");
+    printf("Grupo 01: %d\nGrupo 02: %d\nGrupo 03: %d\n", clusters[0], clusters[1], clusters[2]);
+
     if (fname == NULL)
         fclose(f);
 }

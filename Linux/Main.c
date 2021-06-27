@@ -1,7 +1,7 @@
 #include "FuzzyCMeans.c"
 
 int main(int argc, char **argv) {
-    printf("------------------------------------------------------------------------\n");
+    printf("------------------------------------------------------------------------");
     fuzzy_c_means("WineDataset.dat");
     printf("Number of data points: %d\n", num_data_points);
     printf("Number of clusters: %d\n", num_clusters);

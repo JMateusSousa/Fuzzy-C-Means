@@ -1,4 +1,4 @@
-#include "FuzzyCMeans02.c"
+#include "FuzzyCMeans.c"
 
 int main(int argc, char **argv) {
     printf("------------------------------------------------------------------------\n");

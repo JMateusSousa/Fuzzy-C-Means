@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "chrono": "c",
+        "ctime": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}

@@ -10,3 +10,7 @@
 Membership.matrix
 Main
 WineDataSet
+
+#Others
+.vscode/*
+.DS_Store

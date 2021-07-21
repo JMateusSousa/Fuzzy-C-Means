@@ -1,3 +1,22 @@
+/* * @(#)FuzzyCMeans.c
+ *
+ * Copyright (c) 2013 gyaikhom
+ *
+ */
+/*--------------------------------------------------------------
+--  #1.
+--  Date: Aug, 08, 2019
+--  Author: gyaikhom
+--  Motivo: Contribute to students
+-------------------------------------------------------------
+--  #2.
+--  Date: Jun, 01, 2021
+--  Author: José Mateus e José Lucas
+--  Motivo: Trabalho da disciplina de Sistemas Embarcados 2021.1, Professor: Elias Teodoro
+-------------------------------------------------------------
+**/
+
+
 #include <avr/pgmspace.h>
 
 #define NUM_DATA_POINTS 60

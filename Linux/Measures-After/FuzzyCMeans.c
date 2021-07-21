@@ -108,6 +108,51 @@ long get_mem_usage() {
     return myusage.ru_maxrss;
 }
 
+float power(float base, float exponent) {
+    int result = 1;
+
+    for (exponent; exponent > 0; exponent--) {
+        result = result * base;
+    }
+    return result;
+}
+
+float findSQRT(float number)
+{
+    int start = 0, end = number;
+    int mid;
+    float ans;
+ 
+    while (start <= end) {
+ 
+         mid = (start + end) / 2;
+ 
+        if (mid * mid == number) {
+            ans = mid;
+            break;
+        }
+ 
+        if (mid * mid < number) {
+            ans=start;
+            start = mid + 1;
+        }
+         else {
+            end = mid - 1;
+        }
+    }
+ 
+    float increment = 0.1;
+    for (int i = 0; i < 5; i++) {
+        while (ans * ans <= number) {
+            ans += increment;
+        }
+
+        ans = ans - increment;
+        increment = increment / 10;
+    }
+    return ans;
+}
+
 int init() {
     int i, j, r, rval;
     float s;
@@ -132,7 +177,7 @@ int calculate_centre_vectors() {
 
     for (i = 0; i < MAX_DATA_POINTS; i++) {
         for (j = 0; j < MAX_CLUSTER; j++) {
-            t[i][j] = pow(degree_of_memb[i][j], fuzziness);
+            t[i][j] = power(degree_of_memb[i][j], fuzziness);
         }
     }  
     for (j = 0; j < MAX_CLUSTER; j++) {
@@ -153,9 +198,9 @@ double get_norm(int i, int j) {
     int k;
     float sum = 0.0;
     for (k = 0; k < MAX_DATA_DIMENSION; k++) {
-        sum += pow(data_point[i][k] - cluster_centre[j][k], 2);
+        sum += power(data_point[i][k] - cluster_centre[j][k], 2);
     }
-    return sqrt(sum);
+    return findSQRT(sum);
 }
 
 double get_new_value(int i, int j) {
@@ -165,7 +210,7 @@ double get_new_value(int i, int j) {
     p = 2 / (fuzziness - 1);
     for (k = 0; k < MAX_CLUSTER; k++) {
         t = get_norm(i, j) / get_norm(i, k);
-        t = pow(t, p);
+        t = power(t, p);
         sum += t;
     }
     return 1.0 / sum;
